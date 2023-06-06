@@ -54,19 +54,16 @@ function playRound(playerSelection, computerSelection) {
     case "rock":
       if (computerSelection === "scissors") {
         playerWin = true;
-        break;
       } 
       break;
     case "paper":
       if (computerSelection === "rock") {
         playerWin = true;
-        break;
       }
       break;
     case "scissors":
       if (computerSelection === "paper") {
         playerWin = true;
-        break;
       }
       break;
   }
