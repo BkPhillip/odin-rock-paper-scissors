@@ -39,17 +39,19 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
+  //Change user entered text to lowercase for comparison
   playerSelection = playerSelection.toLowerCase();
-  //First check if the two selections are identical to check for tie
-  //If selections not identical, then compare the players selection with the computer selection in switch case
+
   const upperPlayerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
   const upperComputerSelection = computerSelection.charAt(0).toUpperCase() + computerSelection.slice(1);
   let playerWin = false;
-
+  
+  //Check for tie
   if (playerSelection === computerSelection) {
     return "Tie. Both players choose " + upperPlayerSelection;
   }
-
+  
+  //Check for player win
   switch (playerSelection) {
     case "rock":
       if (computerSelection === "scissors") {
