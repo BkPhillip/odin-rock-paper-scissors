@@ -1,35 +1,48 @@
-game();
+const buttons = document.querySelectorAll('button');
 
-function game() {
-  const gameRounds = 5;
-  let currentRound = 0;
-  let playerWins = 0;
-  let computerWins = 0;
-  
-  // Play 5 rounds of game. Ties are not counted as rounds. Game will not end if player or computer reach 3 wins despite game results being determined
-  do {
-    const playerSelection = prompt("Rock, paper, or scissors? Which do you choose?");
+buttons.forEach((button) => {
+  button.addEventListener('click', function (e) {
+    const playerSelection = button.id;
     const computerSelection = getComputerChoice();
-    
     const gameResults = playRound(playerSelection, computerSelection);
-    console.log(gameResults);
-    //Check if return string contains the word win or lose
-    if (gameResults.split(" ").includes("Win!")) {
-      playerWins += 1;
-      currentRound += 1;
-    } else if (gameResults.split(" ").includes("Lose!")) {
-      computerWins += 1;
-      currentRound += 1;
-    } 
-    console.log("Player: " + playerWins + " Computer: " + computerWins)
-  } while (currentRound < gameRounds);
+    game(gameResults);
+  })
+})
+
+const gameRounds = 5;
+let currentRound = 0;
+let playerWins = 0;
+let computerWins = 0;
+
+function game(gameResults) {
+  
+  //Check if return string contains the word win or lose
+  if (gameResults.split(" ").includes("Win!")) {
+    playerWins += 1;
+    currentRound += 1;
+  } else if (gameResults.split(" ").includes("Lose!")) {
+    computerWins += 1;
+    currentRound += 1;
+  } 
+
+  // Update results display on Webpage
+  const resultsDisplay = document.querySelector('#results');
+  resultsDisplay.setAttribute('style', 'white-space: pre');
+
   //Display  final results
-  if (playerWins > computerWins) {
-    console.log("You Win!");
+  if (playerWins >= 5 || computerWins >= 5) {
+    if ( playerWins === 5) {
+      resultsDisplay.textContent = "You win! \r\nFinal Score: Player " + playerWins + " | Computer " + computerWins;
+    } else {
+      resultsDisplay.textContent = "You Lose! \r\nFinal Score: Player " + playerWins + " | Computer " + computerWins;
+    }
+
+    buttons.forEach(button => button.remove());  // Remove buttons
+    
+
   } else {
-    console.log("You Lose!")
+    resultsDisplay.textContent = `${gameResults} \r\nPlayer: ${playerWins}  Computer: ${computerWins}`;
   }
-  console.log("Final Score: Player " + playerWins + " | Computer " + computerWins);
 }
 
 function getComputerChoice() {
